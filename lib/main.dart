@@ -15,7 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Circle Clock',
-      theme: ThemeData(),
+      theme: ThemeData(
+        textTheme: GoogleFonts.fugazOneTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
       home: Home(),
       debugShowCheckedModeBanner: false,
     );
