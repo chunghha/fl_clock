@@ -4,7 +4,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -46,6 +48,8 @@ class Home extends StatelessWidget {
 }
 
 class HomeContent extends StatefulWidget {
+  HomeContent({Key key}) : super(key: key);
+
   @override
   _HomeContentState createState() => _HomeContentState();
 }
@@ -92,41 +96,99 @@ class _HomeContentState extends State<HomeContent>
 
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: new Container(
-        height: 390.0,
-        width: 390.0,
-        child: new CustomPaint(
-          foregroundPainter: new MyPainter(
-              lineColor: '#5e81ac'.toColor(),
-              completeColor: '#bf616a'.toColor(),
-              completeDegree: degree,
-              width: 16.0),
-          child: new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new RaisedButton(
-              elevation: 16.0,
-              color: '#81a1c1'.toColor(),
-              splashColor: '#88c0d0'.toColor(),
-              shape: new CircleBorder(),
-              child: Center(
-                  child: SizedBox(
-                      height: 64.0,
-                      child: FlipClock.simple(
-                        startTime: DateTime.now(),
-                        digitColor: '#2e3440'.toColor(),
-                        backgroundColor: '#d8dee9'.toColor(),
-                        digitSize: 42.0,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(3.0)),
-                        flipDirection: FlipDirection.up,
-                      ))),
-              onPressed: _onPressed,
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          FlatButton(
+            child: Padding(
+                padding: const EdgeInsets.only(bottom: 24.0),
+                child: SizedBox(
+                  width: 300.0,
+                  child: FadeAnimatedTextKit(
+                    key: Key('mmdd'),
+                    displayFullTextOnTap: true,
+                    duration: Duration(seconds: 60),
+                    text: [_getMmdd()],
+                    textStyle: TextStyle(
+                        color: '#4c566a'.toColor(),
+                        fontSize: 64.0,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Cabin'),
+                    textAlign: TextAlign.center,
+                    alignment: AlignmentDirectional.topStart,
+                    totalRepeatCount: 10,
+                  ),
+                )),
+            onPressed: () {},
+          ),
+          Center(
+            child: Container(
+              height: 390.0,
+              width: 390.0,
+              child: CustomPaint(
+                foregroundPainter: MyPainter(
+                    lineColor: '#5e81ac'.toColor(),
+                    completeColor: '#bf616a'.toColor(),
+                    completeDegree: degree,
+                    width: 16.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RaisedButton(
+                    elevation: 16.0,
+                    color: '#81a1c1'.toColor(),
+                    splashColor: '#88c0d0'.toColor(),
+                    shape: CircleBorder(),
+                    child: Center(
+                      child: SizedBox(
+                          height: 64.0,
+                          child: FlipClock.simple(
+                            startTime: DateTime.now(),
+                            digitColor: '#2e3440'.toColor(),
+                            backgroundColor: '#d8dee9'.toColor(),
+                            digitSize: 42.0,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(3.0)),
+                            flipDirection: FlipDirection.up,
+                          )),
+                    ),
+                    onPressed: _onPressed,
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+          FlatButton(
+            child: Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: SizedBox(
+                  width: 300.0,
+                  child: TextLiquidFill(
+                    key: Key('today'),
+                    text: _getToday(),
+                    loadDuration: Duration(seconds: 60),
+                    waveColor: '#4c566a'.toColor(),
+                    boxBackgroundColor: '#3b4252'.toColor(),
+                    textStyle: TextStyle(
+                        fontSize: 48.0,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Oswald',
+                        fontStyle: FontStyle.italic),
+                    boxHeight: 80.0,
+                  ),
+                )),
+            onPressed: () {},
+          ),
+        ]);
+  }
+
+  String _getMmdd() {
+    return DateTime.now().month.toString() +
+        ' ' +
+        DateTime.now().day.toString();
+  }
+
+  String _getToday() {
+    return DateFormat('EEEE').format(DateTime.now());
   }
 }
 
