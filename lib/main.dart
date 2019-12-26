@@ -123,8 +123,8 @@ class _HomeContentState extends State<HomeContent>
           ),
           Center(
             child: Container(
-              height: 390.0,
-              width: 390.0,
+              height: 340.0,
+              width: 340.0,
               child: CustomPaint(
                 foregroundPainter: MyPainter(
                     lineColor: '#5e81ac'.toColor(),
@@ -146,6 +146,7 @@ class _HomeContentState extends State<HomeContent>
                             digitColor: '#2e3440'.toColor(),
                             backgroundColor: '#d8dee9'.toColor(),
                             digitSize: 42.0,
+                            width: 36.0,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(3.0)),
                             flipDirection: FlipDirection.up,
